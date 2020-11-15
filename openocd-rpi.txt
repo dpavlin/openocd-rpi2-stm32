@@ -1,0 +1,106 @@
+https://www.youtube.com/watch?v=hWYzgw0WhYU
+
+pi@pihdmi:~/openocd $ ./src/openocd -f tcl/interface/raspberrypi2-native.cfg
+Open On-Chip Debugger 0.10.0+dev-01489-g06c7a53f1-dirty (2020-11-14-15:21)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+BCM2835 GPIO nums: swclk = 11, swdio = 25
+
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Error: An adapter speed is not selected in the init script. Insert a call to "adapter speed" or "jtag_rclk" to proceed.
+
+## Switch input
++3.3V 3V3
+  IO1 gpio17 level=1 fsel=0 func=INPUT "ds18b20_temp@2" out hi
+  IO2 gpio18 level=0 fsel=0 func=INPUT					io
+  IO3 gpio27 level=0 fsel=0 func=INPUT					clk
+  GND GND
+
+pi@pihdmi:~/openocd-stm32 $ openocd -f pihdmi-rpi2.cfg
+Open On-Chip Debugger 0.10.0+dev-01489-g06c7a53f1-dirty (2020-11-14-15:21)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+swd
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Warn : gdb services need one or more targets defined
+
+addresses from
+https://github.com/antongus/stm32tpl/blob/master/stm32.h
+
+> mdw 0xE0042000 4
+0xe0042000: 20036410 00000000 00000000 00000000
+
+> mdw 0x1FFF7A10 2
+SWD DPIDR 0x1ba01477
+Failed to read memory at 0x1fff7a14
+
+> mdw 0x1FFFF7E8 4
+0x1ffff7e8: 0670ff48 56558967 67064740 ffff00ff
+
+
+
+openocd -f pihdmi-rpi2.cfg -f target/stm32f1x.cfg
+
+> flash banks
+#0 : stm32f1x.flash (stm32f1x) at 0x08000000, size 0x00000000, buswidth 0, chipwidth 0
+
+> flash read_bank 0 bank0.bin
+device id = 0x20036410
+flash size = 128kbytes
+wrote 131072 bytes to file bank0.bin from flash bank 0 at offset 0x00000000 in 1.273383s (100.520 KiB/s)
+
+
+# write flash back
+
+halt
+stm32f2x unlock 0
+# if it failed, re-try command again
+flash write_bank 0 image.bin
+reset
+
+# gdb
+
+gdb
+
+(gdb) set architecture arm
+The target architecture is assumed to be arm
+
+(gdb) target remote localhost:3333
+Remote debugging using localhost:3333
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x08000194 in ?? ()
+
+(gdb) info reg
+
+(gdb) stepi
+
+(gdb) x/10pi $pc
+=> 0x8000194:   subs    r0, r0, #1
+   0x8000196:   cmp     r0, #0
+   0x8000198:   bne.n   0x8000194
+   0x800019a:   bx      lr
+   0x800019c:   push    {r3, lr}
+   0x800019e:   movs    r1, #1
+   0x80001a0:   movs    r0, #16
+   0x80001a2:   bl      0x80002ec
+   0x80001a6:   mov.w   r0, #8192       ; 0x2000
+   0x80001aa:   strh.w  r0, [sp]
+
+(gdb) b *0x800019a
+Breakpoint 1 at 0x800019a
+
+(gdb) c
+Continuing.
+Note: automatically using hardware breakpoints for read-only addresses.
+
+Breakpoint 1, 0x0800019a in ?? ()
+
+
