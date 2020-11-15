@@ -1,5 +1,17 @@
 https://www.youtube.com/watch?v=hWYzgw0WhYU
 
+# compile openocd
+
+sudo apt-get install git autoconf libtool make pkg-config libusb-1.0-0 libusb-1.0-0-dev
+sudo apt install libgpiod-dev
+git clone http://openocd.zylin.com/openocd
+cd openocd/
+./bootstrap
+./configure --enable-sysfsgpio --enable-bcm2835gpio
+make
+make install
+
+
 pi@pihdmi:~/openocd $ ./src/openocd -f tcl/interface/raspberrypi2-native.cfg
 Open On-Chip Debugger 0.10.0+dev-01489-g06c7a53f1-dirty (2020-11-14-15:21)
 Licensed under GNU GPL v2
