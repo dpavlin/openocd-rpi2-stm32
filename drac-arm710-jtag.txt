@@ -1,0 +1,26 @@
+j-link 14 pin connector on DRAC
+
+VDD 3V3	 1 2  GND
+nTRST	 3 4  GND
+TDI	 5 6  GND ? not GND
+TMS	 7 8  GND
+TCK	 9 10 GND
+TDO	11 12 nSRST
+VDD	13 14 GND
+
+pi@rpi4:~/openocd-rpi2-stm32/openocd $ ./src/openocd -f ../rpi4-jtag.cfg
+Open On-Chip Debugger 0.11.0-rc1+dev-00010-gc69b4deae-dirty (2021-01-05-15:40)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+jtag
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Warn : There are no enabled taps.  AUTO PROBING MIGHT NOT WORK!!
+Info : JTAG tap: auto0.tap tap/device found: 0x18150121 (mfg: 0x090 (Chip Express), part: 0x8150, ver: 0x1)
+Warn : AUTO auto0.tap - use "jtag newtap auto0 tap -irlen 3 -expected-id 0x18150121"
+Warn : gdb services need one or more targets defined
+
+
