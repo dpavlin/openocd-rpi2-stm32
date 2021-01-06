@@ -8,6 +8,9 @@ TCK	 9 10 GND
 TDO	11 12 nSRST
 VDD	13 14 GND
 
+
+# N2530/SP2.0E
+
 pi@rpi4:~/openocd-rpi2-stm32/openocd $ ./src/openocd -f ../rpi4-jtag.cfg
 Open On-Chip Debugger 0.11.0-rc1+dev-00010-gc69b4deae-dirty (2021-01-05-15:40)
 Licensed under GNU GPL v2
@@ -23,4 +26,37 @@ Info : JTAG tap: auto0.tap tap/device found: 0x18150121 (mfg: 0x090 (Chip Expres
 Warn : AUTO auto0.tap - use "jtag newtap auto0 tap -irlen 3 -expected-id 0x18150121"
 Warn : gdb services need one or more targets defined
 
+
+# N2530/SP2.0D
+
+pi@rpi4:~/openocd-rpi2-stm32/openocd $ ./src/openocd -f ../rpi4-jtag.cfg
+Open On-Chip Debugger 0.11.0-rc1+dev-00010-gc69b4deae-dirty (2021-01-05-15:40)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+jtag
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Warn : There are no enabled taps.  AUTO PROBING MIGHT NOT WORK!!
+Info : JTAG tap: auto0.tap tap/device found: 0x18150121 (mfg: 0x090 (Chip Express), part: 0x8150, ver: 0x1)
+Warn : Unexpected idcode after end of chain: 288 0x00007fff
+Warn : Unexpected idcode after end of chain: 320 0x00000000
+Warn : Unexpected idcode after end of chain: 352 0x00000000
+Warn : Unexpected idcode after end of chain: 384 0x00000000
+Warn : Unexpected idcode after end of chain: 416 0x00000000
+Warn : Unexpected idcode after end of chain: 448 0x00000000
+Warn : Unexpected idcode after end of chain: 480 0x00000000
+Warn : Unexpected idcode after end of chain: 512 0x00000000
+Warn : Unexpected idcode after end of chain: 544 0x00000000
+Warn : Unexpected idcode after end of chain: 576 0x00000000
+Warn : Unexpected idcode after end of chain: 608 0x00000000
+Warn : Unexpected idcode after end of chain: 640 0x00000000
+Error: double-check your JTAG setup (interface, speed, ...)
+Error: Trying to use configured scan chain anyway...
+Warn : AUTO auto0.tap - use "jtag newtap auto0 tap -irlen 2 -expected-id 0x18150121"
+Error: auto0.tap: IR capture error; saw 0x0000 not 0x0001
+Warn : Bypassing JTAG setup events due to errors
+Warn : gdb services need one or more targets defined
 
