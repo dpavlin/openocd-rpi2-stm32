@@ -1,0 +1,84 @@
+
+root@rpi4:/home/pi/openocd-rpi2-stm32# openocd -f rpi4-zc-swd.cfg
+Open On-Chip Debugger 0.11.0+dev-00062-g6405d35f3-dirty (2021-03-27-16:05)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 100 kHz
+Info : SWD DPIDR 0x0bc11477
+Info : chip.cpu: hardware has 4 breakpoints, 2 watchpoints
+Info : starting gdb server for chip.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+AP ID register 0x04770031
+        Type is MEM-AP AHB3
+MEM-AP BASE 0xf0000003
+        Valid ROM table present
+                Component base address 0xf0000000
+                Peripheral ID 0x00000a0447
+                Designer is 0x0a0, STMicroelectronics
+                Part is 0x447, Unrecognized
+                Component class is 0x1, ROM table
+                MEMTYPE system memory present on bus
+        ROMTABLE[0x0] = 0xf00ff003
+                Component base address 0xe00ff000
+                Peripheral ID 0x04000bb4c0
+                Designer is 0x4bb, ARM Ltd
+                Part is 0x4c0, Cortex-M0+ ROM (ROM Table)
+                Component class is 0x1, ROM table
+                MEMTYPE system memory present on bus
+        [L01] ROMTABLE[0x0] = 0xfff0f003
+                Component base address 0xe000e000
+                Peripheral ID 0x04000bb008
+                Designer is 0x4bb, ARM Ltd
+                Part is 0x8, Cortex-M0 SCS (System Control Space)
+                Component class is 0xe, Generic IP component
+        [L01] ROMTABLE[0x4] = 0xfff02003
+                Component base address 0xe0001000
+                Peripheral ID 0x04000bb00a
+                Designer is 0x4bb, ARM Ltd
+                Part is 0xa, Cortex-M0 DWT (Data Watchpoint and Trace)
+                Component class is 0xe, Generic IP component
+        [L01] ROMTABLE[0x8] = 0xfff03003
+                Component base address 0xe0002000
+                Peripheral ID 0x04000bb00b
+                Designer is 0x4bb, ARM Ltd
+                Part is 0xb, Cortex-M0 BPU (Breakpoint Unit)
+                Component class is 0xe, Generic IP component
+        [L01] ROMTABLE[0xc] = 0x0
+        [L01]   End of ROM table
+        ROMTABLE[0x4] = 0x200002
+                Component not present
+        ROMTABLE[0x8] = 0x0
+                End of ROM table
+
+
+# figure out which stm32 is this
+Info : SWD DPIDR 0x0bc11477
+STM32L0xx
+
+# using just target/stm32l0.cfg seems to produce just partial firmware dump
+
++ openocd -f rpi4-zc-swd.cfg -f target/stm32l0_dual_bank.cfg
+Open On-Chip Debugger 0.11.0+dev-00062-g6405d35f3-dirty (2021-03-27-16:05)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+swd
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : BCM2835 GPIO JTAG/SWD bitbang driver
+Info : clock speed 300 kHz
+Info : SWD DPIDR 0x0bc11477
+Info : stm32l0.cpu: hardware has 4 breakpoints, 2 watchpoints
+Error: stm32l0.cpu -- clearing lockup after double fault
+Polling target stm32l0.cpu failed, trying to reexamine
+Info : stm32l0.cpu: hardware has 4 breakpoints, 2 watchpoints
+Info : starting gdb server for stm32l0.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+Info : accepting 'gdb' connection on tcp/3333
+Info : Device: STM32L0xx (Cat.5)
+Info : STM32L flash has dual banks. Bank (0) size is 64kb, base address is 0x8000000
+Info : Device: STM32L0xx (Cat.5)
+Info : STM32L flash has dual banks. Bank (1) size is 64kb, base address is 0x8010000
+
