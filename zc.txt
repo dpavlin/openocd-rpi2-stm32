@@ -82,3 +82,18 @@ Info : STM32L flash has dual banks. Bank (0) size is 64kb, base address is 0x800
 Info : Device: STM32L0xx (Cat.5)
 Info : STM32L flash has dual banks. Bank (1) size is 64kb, base address is 0x8010000
 
+# telnet localhost 4444
+
+> flash banks
+#0 : stm32l0.flash (stm32lx) at 0x08000000, size 0x00010000, buswidth 0, chipwidth 0
+#1 : stm32l0.flash1 (stm32lx) at 0x08010000, size 0x00010000, buswidth 0, chipwidth 0
+
+> flash read_bank 0 2012230024.0
+wrote 65536 bytes to file 2012230024.0 from flash bank 0 at offset 0x00000000 in 1.198537s (53.398 KiB/s)
+
+keep_alive() was not invoked in the 1000 ms timelimit. GDB alive packet not sent! (1211 ms). Workaround: increase "set remotetimeout" in GDB
+> flash read_bank 1 2012230024.1
+wrote 65536 bytes to file 2012230024.1 from flash bank 1 at offset 0x00000000 in 1.199143s (53.371 KiB/s)
+
+keep_alive() was not invoked in the 1000 ms timelimit. GDB alive packet not sent! (1256 ms). Workaround: increase "set remotetimeout" in GDB
+>
