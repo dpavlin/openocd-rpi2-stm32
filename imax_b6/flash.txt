@@ -1,0 +1,2 @@
+FlashAprom /nuc/cheali-charger/src/hardware/nuvoton-M0517/targets/imaxB6-clone/cheali-charger-imaxB6-clone_2.01-e10.3.12-20210623_nuvoton-M0517.bin
+FlashAprom /nuc/cheali-charger/src/hardware/nuvoton-M0517/targets/imaxB6-clone/cheali-charger-imaxB6-clone_2.01-e10.3.12-20210705_nuvoton-M0517.bin
